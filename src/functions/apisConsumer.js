@@ -3,6 +3,18 @@ const igdb = require('igdb-api-node').default;
 const client = 'aybfike88n8yqkudlkht30y2tjn8ks';
 const token = 'rbrsebp3tp41al266j0abkezp6194y';
 
+
+async function igdbArtwork(artworksId){
+    const response = await igdb(client, token)
+    .fields(['url'])
+    .limit(1)
+    .where(`id = ${artworksId}`)
+    .request('/artworks');
+
+console.log(response.data[0].url);
+return response.data[0].url;
+}
+
 async function igdbConsumerSearch(gameName) {
     const response = await igdb(client, token)
         .fields(['artworks', 'name', 'total_rating', 'genres', 'platforms', 'first_release_date'])
@@ -10,6 +22,8 @@ async function igdbConsumerSearch(gameName) {
         .search(gameName)
         .request('/games');
 
+    console.log(response.data);
+    response.data[0].artworks = await igdbArtwork(response.data[0].artworks[0]);
     console.log(response.data);
     return response.data;
 }

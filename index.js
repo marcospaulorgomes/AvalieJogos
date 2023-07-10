@@ -25,8 +25,9 @@ app.get('/search/:gamename', async (req, res) => {
 });
 
 
-app.post('/review', (req, res) => { //Como pegar o ID do jogo que está sendo exibido?
-    const { idGame, email, name, rating, description } = req.body;
+app.post('/review/:gameid', (req, res) => {
+    const { email, name, rating, description } = req.body;
+    const gameID = req.params.gameid;
     const reviews = JSON.parse(fs.readFileSync('./src/database/review.json', { encoding: 'utf8', flag: 'r' }));
 
     for (let savedReviews of reviews) {
@@ -34,7 +35,7 @@ app.post('/review', (req, res) => { //Como pegar o ID do jogo que está sendo ex
             return res.status(409).send(`Uma avaliação já foi escrita com o email ${email}.`);
         }
     }
-    const review = new Review(reviews.length + 1, idGame, email, name, rating, description);
+    const review = new Review(reviews.length + 1, gameID, email, name, rating, description);
     reviews.push(review);
     fs.writeFileSync('./src/database/review.json', JSON.stringify(reviews, null, 2));
     res.send('Avaliação registrada com sucesso!');
