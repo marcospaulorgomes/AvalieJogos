@@ -48,7 +48,7 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/genre/:genre', async (req, res) => {
-    const genre = req.params.genre
+    const genre = req.params.genre;
     const games = JSON.stringify(await apiConsumers.igdbConsumerGenre(genre));
     res.send(games);
 });

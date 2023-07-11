@@ -6,16 +6,18 @@ const token = 'rbrsebp3tp41al266j0abkezp6194y';
 
 async function igdbHelper(data){
 
-    data[0].cover = await igdbCover(data[0].cover);
+    for (let j = 0; j < data.length; j++){
 
-    for (let i = 0; i < data[0].platforms.length; i++) {
-        data[0].platforms[i] = await igdbPlataforms(data[0].platforms[i]);
+        data[j].cover = await igdbCover(data[j].cover);
+
+        for (let i = 0; i < data[j].platforms.length; i++) {
+            data[j].platforms[i] = await igdbPlataforms(data[j].platforms[i]);
+        }
+    
+        for (let i = 0; i < data[j].genres.length; i++) {
+            data[j].genres[i] = await igdbGenres(data[j].genres[i]);
+        }
     }
-
-    for (let i = 0; i < data[0].genres.length; i++) {
-        data[0].genres[i] = await igdbGenres(data[0].genres[i]);
-    }
-
     return data;
 }
 
@@ -52,7 +54,7 @@ async function igdbGenres(genreId) {
 async function igdbConsumerSearch(gameName) {
     const response = await igdb(client, token)
         .fields(['cover', 'name', 'total_rating', 'genres', 'platforms', 'first_release_date', 'summary'])
-        .limit(1)
+        .limit(12)
         .search(gameName)
         .request('/games');
 
