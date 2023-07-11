@@ -6,16 +6,16 @@ const token = 'rbrsebp3tp41al266j0abkezp6194y';
 
 async function igdbHelper(data){
 
-    for (let j = 0; j < data.length; j++){
+    for (let result = 0; result < data.length; result++){
 
-        data[j].cover = await igdbCover(data[j].cover);
+        data[result].cover = await igdbCover(data[result].cover);
 
-        for (let i = 0; i < data[j].platforms.length; i++) {
-            data[j].platforms[i] = await igdbPlataforms(data[j].platforms[i]);
+        for (let item = 0; item < data[result].platforms.length; item++) {
+            data[result].platforms[item] = await igdbPlataforms(data[result].platforms[item]);
         }
     
-        for (let i = 0; i < data[j].genres.length; i++) {
-            data[j].genres[i] = await igdbGenres(data[j].genres[i]);
+        for (let item = 0; item < data[result].genres.length; item++) {
+            data[result].genres[item] = await igdbGenres(data[result].genres[item]);
         }
     }
     return data;
