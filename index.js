@@ -1,10 +1,8 @@
 const express = require('express');
 const app = express();
-
 const fs = require('fs');
 
 const ratingFunction = require('./src/functions/ratingCalculator');
-
 const apiConsumers = require('./src/functions/apisConsumer');
 const Review = require('./src/models/Review');
 
@@ -12,14 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/search/:gamename', async (req, res) => {
     const gameName = req.params.gamename;
-    let infoGames = '';
-
-    if ((gameName === '') || (gameName.length === 0)) {
-        infoGames = 'Insira um titulo!';
-    } else {
-        infoGames = await apiConsumers.igdbConsumerSearch(gameName);
-        infoGames = JSON.stringify(ratingFunction.ratingCalculator(infoGames));
-    }
+    infoGames = await apiConsumers.igdbConsumerSearch(gameName);
+    infoGames = JSON.stringify(ratingFunction.ratingCalculator(infoGames));
     res.send(infoGames);
 });
 
@@ -28,7 +20,7 @@ app.post('/review/:gamename', (req, res) => {
     const { email, name, rating, description } = req.body;
     const gameName = req.params.gamename;
 
-    try{
+    try {
         const reviews = JSON.parse(fs.readFileSync('./src/database/review.json', { encoding: 'utf8', flag: 'r' }));
 
         for (let savedReviews of reviews) {
@@ -40,7 +32,7 @@ app.post('/review/:gamename', (req, res) => {
         reviews.push(review);
         fs.writeFileSync('./src/database/review.json', JSON.stringify(reviews, null, 2));
         res.send('Avaliação registrada com sucesso!');
-    } catch (err){
+    } catch (err) {
         res.send(err.message);
     }
 });
