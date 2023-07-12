@@ -86,7 +86,7 @@ async function igdbConsumerHighlights() {
             .limit(7)
             .offset(5)
             .sort('name')
-            .where(`total_rating > ${90}`)
+            .where(`total_rating > ${95}`)
             .request('/games');
 
         response.data = await igdbHelper(response.data);
