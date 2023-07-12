@@ -60,7 +60,6 @@ async function igdbConsumerSearch(gameName) {
 
         response.data = await igdbHelper(response.data);
 
-    console.log(response.data);
     return response.data;
 }
 
@@ -75,7 +74,6 @@ async function igdbConsumerHighlights() {
 
         response.data = await igdbHelper(response.data);
 
-    console.log(response.data);
     return response.data;
 }
 
@@ -87,9 +85,8 @@ async function igdbConsumerGenre(genre) {
         .where(`genres = ${genre}`)
         .request('/games');
 
-        response.data = await igdbHelper(response.data);
+        //response.data = await igdbHelper(response.data);
 
-    console.log(response.data);
     return response.data;
 }
 

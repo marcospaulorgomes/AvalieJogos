@@ -1,11 +1,11 @@
 class Review {
 
-    constructor(id, idGame, email, name, score, description) { //Como vincular o idGame ao model game?
+    constructor(id, gameName, email, name, rating, description) {
         this.id = id;
-        this.idGame = idGame;
+        this.gameName = gameName;
         this.email = email;
         this.name = name;
-        this.score = score;
+        this.rating = rating;
         this.description = description;
     }
 }

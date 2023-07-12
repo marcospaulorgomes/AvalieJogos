@@ -2,32 +2,31 @@ const express = require('express');
 const app = express();
 
 const fs = require('fs');
-/*
-const ratingCalculador = require('./src/functions/ratingCalculator');
-*/
+
+const ratingFunction = require('./src/functions/ratingCalculator');
 
 const apiConsumers = require('./src/functions/apisConsumer');
 const Review = require('./src/models/Review');
 
-app.use(express.urlencoded({ extended: true })); //Necessário para extrair os dados de Forms vindos de uma requisição POST
-
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/search/:gamename', async (req, res) => {
     const gameName = req.params.gamename;
-    let game = '';
+    let infoGames = '';
 
-    if ((!gameName) || (gameName.length == '')) {
-        game = 'Insira um titulo!';
+    if ((gameName === '') || (gameName.length === 0)) {
+        infoGames = 'Insira um titulo!';
     } else {
-        game = JSON.stringify(await apiConsumers.igdbConsumerSearch(gameName));
+        infoGames = await apiConsumers.igdbConsumerSearch(gameName);
+        infoGames = JSON.stringify(ratingFunction.ratingCalculator(infoGames));
     }
-    res.send(game);
+    res.send(infoGames);
 });
 
 
-app.post('/review/:gameid', (req, res) => {
+app.post('/review/:gamename', (req, res) => {
     const { email, name, rating, description } = req.body;
-    const gameID = req.params.gameid;
+    const gameName = req.params.gamename;
     const reviews = JSON.parse(fs.readFileSync('./src/database/review.json', { encoding: 'utf8', flag: 'r' }));
 
     for (let savedReviews of reviews) {
@@ -35,7 +34,7 @@ app.post('/review/:gameid', (req, res) => {
             return res.status(409).send(`Uma avaliação já foi escrita com o email ${email}.`);
         }
     }
-    const review = new Review(reviews.length + 1, gameID, email, name, rating, description);
+    const review = new Review(reviews.length + 1, gameName, email, name, rating, description);
     reviews.push(review);
     fs.writeFileSync('./src/database/review.json', JSON.stringify(reviews, null, 2));
     res.send('Avaliação registrada com sucesso!');

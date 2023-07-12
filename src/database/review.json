@@ -1,23 +1,2 @@
 [
-  {
-    "id": 1,
-    "email": "marcos@gmail.com",
-    "name": "marcos",
-    "score": "7",
-    "description": "bom jogo"
-  },
-  {
-    "id": 2,
-    "email": "paulo@gmail.com",
-    "name": "pauli",
-    "score": "8",
-    "description": "otimo jogo"
-  },
-  {
-    "id": 3,
-    "email": "joao@gmail.com",
-    "name": "joao",
-    "score": "6",
-    "description": "medio"
-  }
 ]
