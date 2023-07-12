@@ -27,17 +27,22 @@ app.get('/search/:gamename', async (req, res) => {
 app.post('/review/:gamename', (req, res) => {
     const { email, name, rating, description } = req.body;
     const gameName = req.params.gamename;
-    const reviews = JSON.parse(fs.readFileSync('./src/database/review.json', { encoding: 'utf8', flag: 'r' }));
 
-    for (let savedReviews of reviews) {
-        if (savedReviews.email === email) {
-            return res.status(409).send(`Uma avaliação já foi escrita com o email ${email}.`);
+    try{
+        const reviews = JSON.parse(fs.readFileSync('./src/database/review.json', { encoding: 'utf8', flag: 'r' }));
+
+        for (let savedReviews of reviews) {
+            if (savedReviews.email === email) {
+                return res.status(409).send(`Uma avaliação já foi escrita com o email ${email}.`);
+            }
         }
+        const review = new Review(reviews.length + 1, gameName, email, name, rating, description);
+        reviews.push(review);
+        fs.writeFileSync('./src/database/review.json', JSON.stringify(reviews, null, 2));
+        res.send('Avaliação registrada com sucesso!');
+    } catch (err){
+        res.send(err.message);
     }
-    const review = new Review(reviews.length + 1, gameName, email, name, rating, description);
-    reviews.push(review);
-    fs.writeFileSync('./src/database/review.json', JSON.stringify(reviews, null, 2));
-    res.send('Avaliação registrada com sucesso!');
 });
 
 

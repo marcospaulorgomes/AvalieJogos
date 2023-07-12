@@ -14,7 +14,9 @@ function reviewRatingCalculator(gameName) {
         }
     }
 
-    ratingReviews = ratingReviews / reviewCount;
+    if(reviewCount != 0){
+        ratingReviews = ratingReviews / reviewCount;
+    }
 
     return ratingReviews;
 }
@@ -25,12 +27,11 @@ function ratingCalculator(infoGame) {
 
         let ratingReviews = reviewRatingCalculator(infoGame[result].name);
 
-        if (ratingReviews != 0) {
+        if ((ratingReviews != 0) && (typeof(ratingReviews) === 'number') ) {
             infoGame[result].total_rating = (infoGame[result].total_rating + ratingReviews) / 2;
         }
 
     }
-
     return infoGame;
 }
 
