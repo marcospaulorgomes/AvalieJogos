@@ -33,6 +33,6 @@
   <span>npx nodemon</span>
 </pre>
 <h3>Licença</h3>
-<p>Distribuído sob a licença MIT. Veja LICENSE para mais informações.</p>
+<p>Distribuído sob a licença MIT.</p>
 <h3>Contato</h3>
 <p>marcospaulorgomes.dev@gmail.com</p>
