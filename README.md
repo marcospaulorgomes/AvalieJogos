@@ -15,7 +15,7 @@
     </li><br />
     <li><a href="https://www.npmjs.com/about">NPM</a>
         - O NPM é gerenciador de pacotes utilizado para administrar as bibliotecas e frameworks utilizados em uma
-        aplicação\n.
+        aplicação.
     </li><br />
     <li><a href="https://www.npmjs.com/package/igdb-api-node">igdb-api-node</a>
         - O igdb-api-node é um wrapper que disponibiliza funções para consumo dos endpoints fornecebidos na <a
